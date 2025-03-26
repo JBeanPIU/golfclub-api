@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
+/* ----------------------------------------- */
+// Entity class representing a Tournament
 @Entity
 @Getter
 @Setter
@@ -17,10 +19,17 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDate tourneyStartDate;
+
+    @Column(nullable = false)
     private LocalDate tourneyEndDate;
+
+    @Column(nullable = false)
     private String tourneyLocal;
+
     private double entryFee;
+
     private double cashPrize;
 
     /* ----------------------------------------- */
@@ -34,5 +43,16 @@ public class Tournament {
         this.tourneyLocal = tourneyLocal;
         this.entryFee = entryFee;
         this.cashPrize = cashPrize;
+    }
+
+    /* ----------------------------------------- */
+    public void addParticipant(Member member) {
+        participants.add(member);
+        member.getTournaments().add(this);
+    }
+
+    public void removeParticipant(Member member) {
+        participants.remove(member);
+        member.getTournaments().remove(this);
     }
 }
